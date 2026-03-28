@@ -1,5 +1,7 @@
 // ===== FULLSCREEN BUTTON =====
 const btnFullscreen = document.getElementById('btn-fullscreen');
+const btnFullscreenIcon = btnFullscreen.querySelector('.btn-fullscreen-icon');
+const btnFullscreenLabel = btnFullscreen.querySelector('.btn-fullscreen-label');
 
 function isFullscreen() {
   return !!(
@@ -12,11 +14,15 @@ function isFullscreen() {
 
 function updateFullscreenButton() {
   if (isFullscreen()) {
-    btnFullscreen.textContent = '✕ Verlaat scherm';
+    btnFullscreenIcon.textContent = '✕';
+    btnFullscreenLabel.textContent = 'Verlaat scherm';
     btnFullscreen.title = 'Verlaat volledig scherm';
+    btnFullscreen.setAttribute('aria-label', 'Verlaat volledig scherm');
   } else {
-    btnFullscreen.textContent = '⛶ Volledig scherm';
+    btnFullscreenIcon.textContent = '⛶';
+    btnFullscreenLabel.textContent = 'Volledig scherm';
     btnFullscreen.title = 'Volledig scherm';
+    btnFullscreen.setAttribute('aria-label', 'Volledig scherm');
   }
 }
 

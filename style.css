@@ -13,11 +13,24 @@
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .btn-fullscreen:hover {
   background: var(--orange);
   color: var(--white);
+}
+
+@media (max-width: 480px) {
+  .btn-fullscreen {
+    padding: 8px 10px;
+  }
+
+  .btn-fullscreen-label {
+    display: none;
+  }
 }
 
 /* ===== RESET & BASE ===== */
