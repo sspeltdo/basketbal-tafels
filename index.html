@@ -12,7 +12,7 @@
 <body>
 
   <!-- ===== FULLSCREEN BUTTON (fixed, always visible) ===== -->
-  <button id="btn-fullscreen" class="btn-fullscreen" title="Volledig scherm">⛶</button>
+  <button id="btn-fullscreen" class="btn-fullscreen" title="Volledig scherm">⛶ Volledig scherm</button>
 
   <!-- ===== WELCOME SCREEN ===== -->
   <div id="screen-welcome" class="screen active">
@@ -23,7 +23,13 @@
     </div>
 
     <div class="config-section">
-      <h2>Vermenigvuldigen</h2>
+      <div class="section-header">
+        <h2>Vermenigvuldigen</h2>
+        <label class="select-all-label">
+          <input type="checkbox" id="select-all-multiply" />
+          Alles selecteren
+        </label>
+      </div>
       <div class="toggle-grid" id="grid-multiply">
         <button class="toggle-btn" data-type="multiply" data-value="1">× 1</button>
         <button class="toggle-btn" data-type="multiply" data-value="2">× 2</button>
@@ -37,7 +43,13 @@
         <button class="toggle-btn" data-type="multiply" data-value="10">× 10</button>
       </div>
 
-      <h2>Delen</h2>
+      <div class="section-header">
+        <h2>Delen</h2>
+        <label class="select-all-label">
+          <input type="checkbox" id="select-all-divide" />
+          Alles selecteren
+        </label>
+      </div>
       <div class="toggle-grid" id="grid-divide">
         <button class="toggle-btn" data-type="divide" data-value="2">÷ 2</button>
         <button class="toggle-btn" data-type="divide" data-value="3">÷ 3</button>
