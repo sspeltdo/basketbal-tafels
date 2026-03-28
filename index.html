@@ -64,7 +64,12 @@
 
       <div class="question-count-row">
         <label for="question-count">Aantal vragen:</label>
-        <input type="number" id="question-count" min="5" max="20" value="10" />
+        <select id="question-count">
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+        </select>
       </div>
 
       <button id="btn-play" class="btn-primary" disabled>Speel! 🏀</button>
@@ -123,6 +128,27 @@
     <div class="end-buttons">
       <button id="btn-replay-same" class="btn-primary">Zelfde oefeningen 🔁</button>
       <button id="btn-replay-new" class="btn-secondary">Opnieuw spelen ⚙️</button>
+    </div>
+  </div>
+
+  <!-- ===== MINI-GAME SCREEN ===== -->
+  <div id="screen-minigame" class="screen">
+    <div class="minigame-header">
+      <h2 class="minigame-title">Bonusspel! 🎉</h2>
+      <p class="minigame-subtitle" id="minigame-subtitle">Tik zo snel mogelijk op de bal!</p>
+    </div>
+    <div class="minigame-arena">
+      <div class="minigame-timer-wrap">
+        <span id="minigame-timer">5</span>
+      </div>
+      <button id="minigame-ball" class="minigame-ball">🏀</button>
+      <div class="minigame-tap-display">
+        <span id="minigame-count">0</span>
+        <span class="minigame-tap-label">tikken</span>
+      </div>
+    </div>
+    <div id="minigame-result" class="minigame-result hidden">
+      <span id="minigame-result-text"></span>
     </div>
   </div>
 

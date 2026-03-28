@@ -113,10 +113,7 @@ function shuffle(arr) {
 }
 
 function generateQuestions() {
-  const count = Math.min(
-    Math.max(parseInt(document.getElementById('question-count').value) || 10, 5),
-    20
-  );
+  const count = parseInt(document.getElementById('question-count').value) || 10;
 
   const multiplyValues = Array.from(
     document.querySelectorAll('.toggle-btn[data-type="multiply"].selected')
@@ -277,10 +274,12 @@ function showFeedback(isCorrect, correct) {
 
   setTimeout(() => {
     currentQ++;
-    if (currentQ < questions.length) {
-      showQuestion();
-    } else {
+    if (currentQ >= questions.length) {
       showEndScreen();
+    } else if (isCorrect && scoreCorrect % 5 === 0) {
+      showMiniGame();
+    } else {
+      showQuestion();
     }
   }, 1500);
 }
@@ -291,6 +290,77 @@ function showSwoosh(emoji) {
   swoosh.textContent = emoji;
   document.body.appendChild(swoosh);
   setTimeout(() => swoosh.remove(), 700);
+}
+
+// ===== MINI-GAME =====
+let miniGameTaps = 0;
+let miniGameInterval = null;
+
+function showMiniGame() {
+  showScreen('screen-minigame');
+  miniGameTaps = 0;
+
+  const countEl = document.getElementById('minigame-count');
+  const timerEl = document.getElementById('minigame-timer');
+  const ball = document.getElementById('minigame-ball');
+  const result = document.getElementById('minigame-result');
+  const subtitle = document.getElementById('minigame-subtitle');
+
+  countEl.textContent = '0';
+  timerEl.textContent = '5';
+  ball.disabled = false;
+  result.classList.add('hidden');
+  subtitle.textContent = `${scoreCorrect} goed! Tik zo snel mogelijk op de bal!`;
+
+  ball.onclick = () => {
+    if (ball.disabled) return;
+    miniGameTaps++;
+    countEl.textContent = miniGameTaps;
+    ball.classList.remove('tap-anim');
+    void ball.offsetWidth; // force reflow to restart animation
+    ball.classList.add('tap-anim');
+  };
+
+  let timeLeft = 5;
+  miniGameInterval = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(miniGameInterval);
+      miniGameInterval = null;
+      endMiniGame();
+    }
+  }, 1000);
+}
+
+function endMiniGame() {
+  const ball = document.getElementById('minigame-ball');
+  const result = document.getElementById('minigame-result');
+  const resultText = document.getElementById('minigame-result-text');
+
+  ball.disabled = true;
+  ball.onclick = null;
+
+  let message;
+  if (miniGameTaps === 0) {
+    message = 'Niet getikt! Probeer het de volgende keer! 😅';
+  } else if (miniGameTaps < 5) {
+    message = `${miniGameTaps} tikken! Goed geprobeerd! 👍`;
+  } else if (miniGameTaps < 10) {
+    message = `${miniGameTaps} tikken! Lekker bezig! 🏀`;
+  } else if (miniGameTaps < 15) {
+    message = `${miniGameTaps} tikken! Wauw, supersnel! ⚡`;
+  } else {
+    message = `${miniGameTaps} tikken! Ongelofelijk! 🌟`;
+  }
+
+  resultText.textContent = message;
+  result.classList.remove('hidden');
+
+  setTimeout(() => {
+    showScreen('screen-game');
+    showQuestion();
+  }, 2500);
 }
 
 function showEndScreen() {

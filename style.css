@@ -202,20 +202,30 @@ html, body {
 }
 
 #question-count {
-  width: 80px;
-  padding: 10px 12px;
+  padding: 10px 14px;
   border-radius: 10px;
   border: 3px solid var(--orange);
   background: var(--dark-gray);
   color: var(--white);
   font-family: 'Fredoka One', cursive;
   font-size: 1.3rem;
-  text-align: center;
   outline: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffb366' d='M4 6l4 5 4-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 34px;
 }
 
 #question-count:focus {
   box-shadow: 0 0 10px rgba(244,124,32,0.5);
+}
+
+#question-count option {
+  background: var(--dark-gray);
+  color: var(--white);
 }
 
 /* ===== BUTTONS ===== */
@@ -590,6 +600,114 @@ html, body {
   background: linear-gradient(90deg, var(--orange), var(--yellow));
   border-radius: 4px;
   transition: width 0.4s ease;
+}
+
+/* ===== MINI-GAME SCREEN ===== */
+#screen-minigame {
+  background: radial-gradient(ellipse at center, #2a1c00 0%, var(--black) 75%);
+  gap: 28px;
+  justify-content: center;
+}
+
+.minigame-header {
+  text-align: center;
+}
+
+.minigame-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  color: var(--orange);
+  text-shadow: 2px 2px 0 var(--orange-dark);
+}
+
+.minigame-subtitle {
+  font-size: clamp(1rem, 3.5vw, 1.3rem);
+  color: var(--orange-light);
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.minigame-arena {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.minigame-timer-wrap {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  color: var(--yellow);
+  background: rgba(241,196,15,0.1);
+  border: 4px solid var(--yellow);
+  border-radius: 50%;
+  width: clamp(80px, 18vw, 110px);
+  height: clamp(80px, 18vw, 110px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.minigame-ball {
+  font-size: clamp(6rem, 22vw, 9rem);
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  filter: drop-shadow(0 8px 18px rgba(244,124,32,0.5));
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.minigame-ball:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.minigame-ball.tap-anim {
+  animation: tapBounce 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tapBounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.82); }
+  100% { transform: scale(1); }
+}
+
+.minigame-tap-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+#minigame-count {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(3rem, 12vw, 5rem);
+  color: var(--yellow);
+  line-height: 1;
+}
+
+.minigame-tap-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--orange-light);
+}
+
+.minigame-result {
+  background: rgba(39,174,96,0.2);
+  border: 3px solid var(--green);
+  border-radius: 16px;
+  padding: 16px 28px;
+  text-align: center;
+  animation: feedbackSlide 0.3s ease;
+  max-width: 400px;
+}
+
+#minigame-result-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.1rem, 4vw, 1.6rem);
+  color: var(--white);
 }
 
 /* ===== RESPONSIVE ===== */
