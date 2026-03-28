@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basketbal Tafels 🏀</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== WELCOME SCREEN ===== -->
+  <div id="screen-welcome" class="screen active">
+    <div class="welcome-header">
+      <div class="ball-bounce">🏀</div>
+      <h1>Basketbal Tafels!</h1>
+      <p class="subtitle">Kies je oefeningen</p>
+    </div>
+
+    <div class="config-section">
+      <h2>Vermenigvuldigen</h2>
+      <div class="toggle-grid" id="grid-multiply">
+        <button class="toggle-btn" data-type="multiply" data-value="1">× 1</button>
+        <button class="toggle-btn" data-type="multiply" data-value="2">× 2</button>
+        <button class="toggle-btn" data-type="multiply" data-value="3">× 3</button>
+        <button class="toggle-btn" data-type="multiply" data-value="4">× 4</button>
+        <button class="toggle-btn" data-type="multiply" data-value="5">× 5</button>
+        <button class="toggle-btn" data-type="multiply" data-value="6">× 6</button>
+        <button class="toggle-btn" data-type="multiply" data-value="7">× 7</button>
+        <button class="toggle-btn" data-type="multiply" data-value="8">× 8</button>
+        <button class="toggle-btn" data-type="multiply" data-value="9">× 9</button>
+        <button class="toggle-btn" data-type="multiply" data-value="10">× 10</button>
+      </div>
+
+      <h2>Delen</h2>
+      <div class="toggle-grid" id="grid-divide">
+        <button class="toggle-btn" data-type="divide" data-value="2">÷ 2</button>
+        <button class="toggle-btn" data-type="divide" data-value="3">÷ 3</button>
+        <button class="toggle-btn" data-type="divide" data-value="4">÷ 4</button>
+        <button class="toggle-btn" data-type="divide" data-value="5">÷ 5</button>
+        <button class="toggle-btn" data-type="divide" data-value="6">÷ 6</button>
+        <button class="toggle-btn" data-type="divide" data-value="7">÷ 7</button>
+        <button class="toggle-btn" data-type="divide" data-value="8">÷ 8</button>
+        <button class="toggle-btn" data-type="divide" data-value="9">÷ 9</button>
+        <button class="toggle-btn" data-type="divide" data-value="10">÷ 10</button>
+      </div>
+
+      <div class="question-count-row">
+        <label for="question-count">Aantal vragen:</label>
+        <input type="number" id="question-count" min="5" max="20" value="10" />
+      </div>
+
+      <button id="btn-play" class="btn-primary" disabled>Speel! 🏀</button>
+    </div>
+  </div>
+
+  <!-- ===== GAME SCREEN ===== -->
+  <div id="screen-game" class="screen">
+    <div class="court-bg"></div>
+
+    <div class="game-header">
+      <div class="progress-info">
+        <span id="question-label">Vraag 1 van 10</span>
+      </div>
+      <div class="scoreboard">
+        <span>🏀 Score: </span>
+        <span id="score-correct">0</span>
+        <span> / </span>
+        <span id="score-total">0</span>
+      </div>
+    </div>
+
+    <div class="question-area">
+      <div id="question-text" class="question-text"></div>
+
+      <!-- Multiple choice answers -->
+      <div id="mc-area" class="mc-area hidden">
+        <div class="mc-grid">
+          <button class="mc-btn" id="mc-btn-0"></button>
+          <button class="mc-btn" id="mc-btn-1"></button>
+          <button class="mc-btn" id="mc-btn-2"></button>
+          <button class="mc-btn" id="mc-btn-3"></button>
+        </div>
+      </div>
+
+      <!-- Fill-in answer -->
+      <div id="fill-area" class="fill-area hidden">
+        <input type="number" id="fill-input" class="fill-input" min="0" max="1000" placeholder="?" />
+        <button id="fill-submit" class="btn-primary">OK ✔</button>
+      </div>
+
+      <!-- Feedback message -->
+      <div id="feedback" class="feedback hidden">
+        <span id="feedback-icon"></span>
+        <span id="feedback-text"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== END SCREEN ===== -->
+  <div id="screen-end" class="screen">
+    <div class="end-trophy">🏆</div>
+    <h1 id="end-title">Goed gedaan!</h1>
+    <div id="end-score" class="end-score"></div>
+    <p id="end-message" class="end-message"></p>
+    <div class="end-buttons">
+      <button id="btn-replay-same" class="btn-primary">Zelfde oefeningen 🔁</button>
+      <button id="btn-replay-new" class="btn-secondary">Opnieuw spelen ⚙️</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
