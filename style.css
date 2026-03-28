@@ -16,11 +16,15 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-fullscreen:hover {
-  background: var(--orange);
-  color: var(--white);
+@media (hover: hover) {
+  .btn-fullscreen:hover {
+    background: var(--orange);
+    color: var(--white);
+  }
 }
 
 @media (max-width: 480px) {
@@ -188,11 +192,15 @@ html, body {
   cursor: pointer;
   transition: all 0.15s ease;
   user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.toggle-btn:hover {
-  border-color: var(--orange);
-  background: #3a2200;
+@media (hover: hover) {
+  .toggle-btn:hover {
+    border-color: var(--orange);
+    background: #3a2200;
+  }
 }
 
 .toggle-btn.selected {
@@ -254,12 +262,16 @@ html, body {
   box-shadow: 0 6px 0 var(--orange-dark), var(--shadow);
   transition: all 0.12s ease;
   letter-spacing: 1px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-primary:hover:not(:disabled) {
-  background: var(--orange-light);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 0 var(--orange-dark), var(--shadow);
+@media (hover: hover) {
+  .btn-primary:hover:not(:disabled) {
+    background: var(--orange-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 0 var(--orange-dark), var(--shadow);
+  }
 }
 
 .btn-primary:active:not(:disabled) {
@@ -284,11 +296,15 @@ html, body {
   font-size: clamp(1rem, 3.5vw, 1.3rem);
   cursor: pointer;
   transition: all 0.12s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-secondary:hover {
-  background: var(--orange);
-  color: var(--white);
+@media (hover: hover) {
+  .btn-secondary:hover {
+    background: var(--orange);
+    color: var(--white);
+  }
 }
 
 /* ===== GAME SCREEN ===== */
