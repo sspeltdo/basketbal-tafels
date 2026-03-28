@@ -415,13 +415,16 @@ html, body {
   cursor: pointer;
   transition: all 0.12s ease;
   box-shadow: 0 4px 0 #111;
+  touch-action: manipulation;
 }
 
-.mc-btn:hover:not(:disabled) {
-  border-color: var(--orange);
-  background: #3a2200;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 0 var(--orange-dark);
+@media (hover: hover) {
+  .mc-btn:hover:not(:disabled) {
+    border-color: var(--orange);
+    background: #3a2200;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--orange-dark);
+  }
 }
 
 .mc-btn.correct {
@@ -670,6 +673,7 @@ html, body {
   filter: drop-shadow(0 8px 18px rgba(244,124,32,0.5));
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .minigame-ball:disabled {
