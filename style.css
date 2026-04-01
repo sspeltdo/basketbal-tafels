@@ -155,6 +155,10 @@ html, body {
 
 .section-header h2 {
   margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .select-all-label {
@@ -166,6 +170,7 @@ html, body {
   color: var(--orange-light);
   cursor: pointer;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .select-all-label input[type="checkbox"] {
@@ -413,6 +418,10 @@ html, body {
 }
 
 /* Multiple choice */
+.mc-area {
+  width: 100%;
+}
+
 .mc-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -649,6 +658,7 @@ html, body {
   background: radial-gradient(ellipse at center, #2a1c00 0%, var(--black) 75%);
   gap: 28px;
   justify-content: center;
+  touch-action: manipulation;
 }
 
 .minigame-header {
@@ -745,6 +755,8 @@ html, body {
   text-align: center;
   animation: feedbackSlide 0.3s ease;
   max-width: 400px;
+  touch-action: manipulation;
+  user-select: none;
 }
 
 #minigame-result-text {
@@ -904,5 +916,27 @@ html, body {
   .key-ok {
     padding: 14px;
     font-size: 1.4rem;
+  }
+}
+
+/* ===== LANDSCAPE: OSK SIDE-BY-SIDE ===== */
+/* In landscape orientation, display the on-screen keyboard on the right side
+   so it doesn't cover the question/input area. */
+@media (orientation: landscape) {
+  .on-screen-keyboard:not(.hidden) {
+    left: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    border-top: none;
+    border-left: 3px solid var(--orange);
+    border-radius: 0;
+    padding: calc(env(safe-area-inset-top, 0px) + 20px) 12px calc(env(safe-area-inset-bottom, 0px) + 20px);
+  }
+
+  #screen-game.osk-open {
+    padding-bottom: 0;
+    padding-right: 300px;
   }
 }

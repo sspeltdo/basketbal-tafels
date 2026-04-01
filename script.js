@@ -56,6 +56,16 @@ document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
 document.addEventListener('mozfullscreenchange', updateFullscreenButton);
 document.addEventListener('MSFullscreenChange', updateFullscreenButton);
 
+// Hide the fullscreen button when the browser doesn't support the fullscreen API (e.g. iOS Safari).
+if (
+  !document.documentElement.requestFullscreen &&
+  !document.documentElement.webkitRequestFullscreen &&
+  !document.documentElement.mozRequestFullScreen &&
+  !document.documentElement.msRequestFullscreen
+) {
+  btnFullscreen.style.display = 'none';
+}
+
 // ===== TOGGLE BUTTONS & SELECT ALL =====
 const btnPlay = document.getElementById('btn-play');
 
