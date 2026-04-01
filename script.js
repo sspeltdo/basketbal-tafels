@@ -164,6 +164,84 @@ function getWrongAnswers(correct, count) {
   return Array.from(wrongs);
 }
 
+// ===== ON-SCREEN KEYBOARD =====
+// The current string value being typed via the on-screen keyboard.
+let oskValue = '';
+// Callback invoked when the user presses OK/Enter on the keyboard.
+let oskSubmitFn = null;
+
+/** Reflects oskValue in the fill-input display element. */
+function oskUpdateDisplay() {
+  const display = document.getElementById('fill-input');
+  if (oskValue === '') {
+    display.innerHTML = '<span class="fill-input-placeholder">?</span>';
+  } else {
+    display.textContent = oskValue;
+  }
+}
+
+/** Shows the on-screen keyboard and resets the typed value. */
+function oskShow() {
+  oskValue = '';
+  oskUpdateDisplay();
+  document.getElementById('fill-input').classList.add('active');
+  document.getElementById('on-screen-keyboard').classList.remove('hidden');
+}
+
+/** Hides the on-screen keyboard and clears the active state. */
+function oskHide() {
+  document.getElementById('on-screen-keyboard').classList.add('hidden');
+  document.getElementById('fill-input').classList.remove('active');
+  oskSubmitFn = null;
+}
+
+// Handle clicks/taps on the on-screen keyboard buttons.
+document.getElementById('on-screen-keyboard').addEventListener('click', e => {
+  const keyEl = e.target.closest('[data-key]');
+  if (!keyEl) return;
+  const k = keyEl.dataset.key;
+
+  if (k === 'clear') {
+    // Clear: remove all typed characters.
+    oskValue = '';
+  } else if (k === 'backspace') {
+    // Backspace: remove the last character.
+    oskValue = oskValue.slice(0, -1);
+  } else if (k === 'ok') {
+    // OK/Enter: submit the current value via the registered callback.
+    if (oskSubmitFn) oskSubmitFn();
+    return;
+  } else {
+    // Digit key: append digit (max 4 digits to cover answers up to 9999).
+    if (oskValue.length < 4) oskValue += k;
+  }
+
+  oskUpdateDisplay();
+});
+
+// Also handle physical keyboard input while the OSK is visible (desktop / accessibility).
+document.addEventListener('keydown', e => {
+  const osk = document.getElementById('on-screen-keyboard');
+  if (osk.classList.contains('hidden')) return;
+
+  if (e.key.length === 1 && e.key >= '0' && e.key <= '9') {
+    if (oskValue.length < 4) oskValue += e.key;
+    oskUpdateDisplay();
+    e.preventDefault();
+  } else if (e.key === 'Backspace') {
+    oskValue = oskValue.slice(0, -1);
+    oskUpdateDisplay();
+    e.preventDefault();
+  } else if (e.key === 'Delete') {
+    oskValue = '';
+    oskUpdateDisplay();
+    e.preventDefault();
+  } else if (e.key === 'Enter') {
+    if (oskSubmitFn) oskSubmitFn();
+    e.preventDefault();
+  }
+});
+
 // ===== GAME PLAY =====
 function startGame() {
   questions = generateQuestions();
@@ -198,6 +276,8 @@ function showQuestion() {
 function showMultipleChoice(q) {
   document.getElementById('mc-area').classList.remove('hidden');
   document.getElementById('fill-area').classList.add('hidden');
+  // Make sure the on-screen keyboard is hidden for multiple-choice questions.
+  oskHide();
 
   const options = shuffle([q.answer, ...getWrongAnswers(q.answer, 3)]);
 
@@ -214,20 +294,17 @@ function showFillIn(q) {
   document.getElementById('mc-area').classList.add('hidden');
   document.getElementById('fill-area').classList.remove('hidden');
 
-  const input = document.getElementById('fill-input');
-  const submitBtn = document.getElementById('fill-submit');
-  input.value = '';
-  input.disabled = false;
-  submitBtn.disabled = false;
-  input.focus();
+  // Reset on-screen keyboard and show it; the fill-submit button is not needed
+  // because the keyboard's own OK key handles submission.
+  oskShow();
 
   const submitAnswer = () => {
-    const val = parseInt(input.value);
+    const val = parseInt(oskValue, 10);
     if (!isNaN(val)) handleFillAnswer(val, q.answer);
   };
 
-  submitBtn.onclick = submitAnswer;
-  input.onkeydown = e => { if (e.key === 'Enter') submitAnswer(); };
+  // Store the submit callback so the OSK OK key can trigger it.
+  oskSubmitFn = submitAnswer;
 }
 
 function handleMCAnswer(selected, correct) {
@@ -253,8 +330,8 @@ function handleFillAnswer(selected, correct) {
   scoreTotal++;
   if (selected === correct) scoreCorrect++;
 
-  document.getElementById('fill-input').disabled = true;
-  document.getElementById('fill-submit').disabled = true;
+  // Hide the on-screen keyboard now that the answer is submitted.
+  oskHide();
 
   showFeedback(selected === correct, correct);
 }

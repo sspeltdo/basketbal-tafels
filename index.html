@@ -107,14 +107,36 @@
 
       <!-- Fill-in answer -->
       <div id="fill-area" class="fill-area hidden">
-        <input type="number" id="fill-input" class="fill-input" min="0" max="1000" placeholder="?" />
-        <button id="fill-submit" class="btn-primary">OK ✔</button>
+        <!-- Display element: updated by the on-screen keyboard, never focuses native keyboard -->
+        <div id="fill-input" class="fill-input" role="status" aria-live="polite" aria-label="Ingetypt antwoord" tabindex="-1">
+          <span class="fill-input-placeholder">?</span>
+        </div>
+        <button id="fill-submit" class="btn-primary hidden">OK ✔</button>
       </div>
 
       <!-- Feedback message -->
       <div id="feedback" class="feedback hidden">
         <span id="feedback-icon"></span>
         <span id="feedback-text"></span>
+      </div>
+    </div>
+
+    <!-- ===== ON-SCREEN KEYBOARD (fill-in mode only) ===== -->
+    <div id="on-screen-keyboard" class="on-screen-keyboard hidden" aria-label="Toetsenbord">
+      <div class="osk-grid">
+        <button class="key" data-key="7" aria-label="7">7</button>
+        <button class="key" data-key="8" aria-label="8">8</button>
+        <button class="key" data-key="9" aria-label="9">9</button>
+        <button class="key" data-key="4" aria-label="4">4</button>
+        <button class="key" data-key="5" aria-label="5">5</button>
+        <button class="key" data-key="6" aria-label="6">6</button>
+        <button class="key" data-key="1" aria-label="1">1</button>
+        <button class="key" data-key="2" aria-label="2">2</button>
+        <button class="key" data-key="3" aria-label="3">3</button>
+        <button class="key key-clear" data-key="clear" aria-label="Wis alles">C</button>
+        <button class="key" data-key="0" aria-label="0">0</button>
+        <button class="key key-backspace" data-key="backspace" aria-label="Verwijder laatste cijfer">⌫</button>
+        <button class="key key-ok" data-key="ok" aria-label="Bevestig antwoord">OK ✔</button>
       </div>
     </div>
   </div>
