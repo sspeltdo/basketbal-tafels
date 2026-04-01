@@ -173,12 +173,17 @@ let oskSubmitFn = null;
 /** Reflects oskValue in the fill-input display element. */
 function oskUpdateDisplay() {
   const display = document.getElementById('fill-input');
-  if (oskValue === '') {
-    // Use DOM API instead of innerHTML to manage the placeholder safely.
-    display.textContent = '';
-    const placeholder = document.createElement('span');
+  // Use DOM APIs instead of innerHTML to manage the placeholder safely.
+  let placeholder = display.querySelector('.fill-input-placeholder');
+  if (!placeholder) {
+    placeholder = document.createElement('span');
     placeholder.className = 'fill-input-placeholder';
     placeholder.textContent = '?';
+  }
+
+  if (oskValue === '') {
+    // Show only the placeholder when there is no value.
+    display.textContent = '';
     display.appendChild(placeholder);
   } else {
     // Show the typed value as plain text.
