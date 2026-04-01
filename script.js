@@ -174,8 +174,14 @@ let oskSubmitFn = null;
 function oskUpdateDisplay() {
   const display = document.getElementById('fill-input');
   if (oskValue === '') {
-    display.innerHTML = '<span class="fill-input-placeholder">?</span>';
+    // Use DOM API instead of innerHTML to manage the placeholder safely.
+    display.textContent = '';
+    const placeholder = document.createElement('span');
+    placeholder.className = 'fill-input-placeholder';
+    placeholder.textContent = '?';
+    display.appendChild(placeholder);
   } else {
+    // Show the typed value as plain text.
     display.textContent = oskValue;
   }
 }
@@ -186,11 +192,14 @@ function oskShow() {
   oskUpdateDisplay();
   document.getElementById('fill-input').classList.add('active');
   document.getElementById('on-screen-keyboard').classList.remove('hidden');
+  // Push the game content up so it isn't obscured by the fixed keyboard.
+  document.getElementById('screen-game').classList.add('osk-open');
 }
 
 /** Hides the on-screen keyboard and clears the active state. */
 function oskHide() {
   document.getElementById('on-screen-keyboard').classList.add('hidden');
+  document.getElementById('screen-game').classList.remove('osk-open');
   document.getElementById('fill-input').classList.remove('active');
   oskSubmitFn = null;
 }

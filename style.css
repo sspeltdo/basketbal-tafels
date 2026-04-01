@@ -791,23 +791,29 @@ html, body {
 
 /* ===== ON-SCREEN KEYBOARD ===== */
 .on-screen-keyboard {
-  position: sticky;
+  position: fixed;
   bottom: 0;
+  left: 0;
+  right: 0;
   z-index: 200;
-  width: 100%;
-  max-width: 400px;
-  align-self: center;
-  padding: 12px 12px 20px;
+  padding: 12px 12px calc(20px + env(safe-area-inset-bottom, 0px));
   background: rgba(20, 14, 0, 0.97);
   border-top: 3px solid var(--orange);
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -4px 24px rgba(0,0,0,0.5);
 }
 
+/* When the OSK is open, push the game content up so it isn't hidden behind the keyboard. */
+#screen-game.osk-open {
+  padding-bottom: 420px;
+}
+
 .osk-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 /* Generic key */
