@@ -148,7 +148,7 @@ function generateQuestions() {
   });
 
   divideValues.forEach(table => {
-    for (let i = 2; i <= 10; i++) {
+    for (let i = (table === 1 ? 1 : 2); i <= 10; i++) {
       pool.push({ type: 'divide', a: table * i, b: table, answer: i });
     }
   });
