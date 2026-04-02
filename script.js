@@ -274,6 +274,8 @@ function startGame() {
   scoreTotal = 0;
   showScreen('screen-game');
   showQuestion();
+  wakeLockGameActive = true;
+  requestWakeLock().then(resetWakeLockIdleTimer);
 }
 
 function showQuestion() {
@@ -472,6 +474,7 @@ function endMiniGame() {
 
 function showEndScreen() {
   showScreen('screen-end');
+  wakeLockGameActive = false;
 
   const pct = Math.round((scoreCorrect / questions.length) * 100);
   document.getElementById('end-score').textContent =
@@ -502,3 +505,47 @@ btnPlay.addEventListener('click', startGame);
 // ===== END SCREEN BUTTONS =====
 document.getElementById('btn-replay-same').addEventListener('click', startGame);
 document.getElementById('btn-replay-new').addEventListener('click', () => showScreen('screen-welcome'));
+
+// ===== SCREEN WAKE LOCK =====
+// Keep the screen on while the game is active. Automatically release after
+// 3 minutes of inactivity so the device can sleep when no longer in use.
+const WAKE_LOCK_IDLE_MS = 3 * 60 * 1000; // 3 minutes
+
+let wakeLock = null;
+let wakeLockIdleTimer = null;
+let wakeLockGameActive = false;
+
+async function requestWakeLock() {
+  if (!('wakeLock' in navigator)) return;
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+  } catch {
+    // Wake lock request failed (e.g. document not visible) – silently ignore.
+  }
+}
+
+function releaseWakeLock() {
+  if (wakeLock) {
+    wakeLock.release();
+    wakeLock = null;
+  }
+}
+
+function resetWakeLockIdleTimer() {
+  if (!wakeLock) return;
+  clearTimeout(wakeLockIdleTimer);
+  wakeLockIdleTimer = setTimeout(releaseWakeLock, WAKE_LOCK_IDLE_MS);
+}
+
+// Re-acquire the wake lock when the page becomes visible again (the browser
+// releases wake locks automatically when the tab/page is hidden).
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && wakeLock === null && wakeLockGameActive) {
+    requestWakeLock().then(resetWakeLockIdleTimer);
+  }
+});
+
+// Reset the idle timer on any pointer or keyboard activity.
+['pointerdown', 'keydown'].forEach(evt => {
+  document.addEventListener(evt, resetWakeLockIdleTimer, { passive: true });
+});
